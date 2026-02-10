@@ -1,0 +1,169 @@
+{
+  "info": {
+    "name": "BI Platform API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"owner@demo.com\",\n  \"password\": \"Password123!\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+      }
+    },
+    {
+      "name": "Company - Upsert Config",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"companyName\": \"Demo Company\",\n  \"taxRate\": 18,\n  \"currency\": \"USD\",\n  \"email\": \"owner@demo.com\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/company/config", "host": ["{{baseUrl}}"], "path": ["company", "config"] }
+      }
+    },
+    {
+      "name": "Company - Get Config",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/company/config", "host": ["{{baseUrl}}"], "path": ["company", "config"] }
+      }
+    },
+    {
+      "name": "Sales - Upload CSV",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "file", "type": "file", "src": "samples/sales_sample.csv" }
+          ]
+        },
+        "url": { "raw": "{{baseUrl}}/sales/upload", "host": ["{{baseUrl}}"], "path": ["sales", "upload"] }
+      }
+    },
+    {
+      "name": "Sales - Revenue Over Time",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/sales/revenue-over-time?interval=day", "host": ["{{baseUrl}}"], "path": ["sales", "revenue-over-time"], "query": [{"key":"interval","value":"day"}] }
+      }
+    },
+    {
+      "name": "Sales - Revenue By Product",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/sales/revenue-by-product", "host": ["{{baseUrl}}"], "path": ["sales", "revenue-by-product"] }
+      }
+    },
+    {
+      "name": "Purchases - Upload CSV",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "file", "type": "file", "src": "samples/purchases_sample.csv" }
+          ]
+        },
+        "url": { "raw": "{{baseUrl}}/purchases/upload", "host": ["{{baseUrl}}"], "path": ["purchases", "upload"] }
+      }
+    },
+    {
+      "name": "Purchases - List",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/purchases/list", "host": ["{{baseUrl}}"], "path": ["purchases", "list"] }
+      }
+    },
+    {
+      "name": "Inventory - Stock",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/inventory/stock", "host": ["{{baseUrl}}"], "path": ["inventory", "stock"] }
+      }
+    },
+    {
+      "name": "Inventory - Alerts",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/inventory/alerts", "host": ["{{baseUrl}}"], "path": ["inventory", "alerts"] }
+      }
+    },
+    {
+      "name": "Report - KPIs",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/report/kpis", "host": ["{{baseUrl}}"], "path": ["report", "kpis"] }
+      }
+    },
+    {
+      "name": "Report - AI",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/report/ai", "host": ["{{baseUrl}}"], "path": ["report", "ai"] }
+      }
+    },
+    {
+      "name": "AI - Insights",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/ai/insights?module=sales", "host": ["{{baseUrl}}"], "path": ["ai", "insights"], "query": [{"key":"module","value":"sales"}] }
+      }
+    },
+    {
+      "name": "AI Agent - Trigger",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/ai-agent/trigger", "host": ["{{baseUrl}}"], "path": ["ai-agent", "trigger"] }
+      }
+    }
+  ]
+}

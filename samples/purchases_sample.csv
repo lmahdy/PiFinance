@@ -1,0 +1,10 @@
+Date,Supplier,Item,Type,Quantity,Cost_Price,Total_Cost
+2025-11-25,TechSupply Inc,Laptop HP,Stock,10,600,6000
+2025-11-25,TechSupply Inc,Keyboard,Stock,50,12,600
+2025-11-25,TechSupply Inc,Mouse,Stock,80,7,560
+2025-11-26,DisplayWorld,Monitor 24,Stock,20,110,2200
+2025-11-27,OfficeRent,Rent,Overhead,1,1200,1200
+2025-11-28,UtilityCo,Electricity,Overhead,1,300,300
+2025-12-02,TechSupply Inc,Laptop HP,Stock,6,610,3660
+2025-12-03,TechSupply Inc,Keyboard,Stock,40,11,440
+2025-12-04,OfficeRent,Rent,Overhead,1,1200,1200
