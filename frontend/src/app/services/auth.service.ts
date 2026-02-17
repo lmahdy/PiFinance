@@ -26,4 +26,21 @@ export class AuthService {
   logout() {
     localStorage.removeItem(this.tokenKey);
   }
+
+  signup(payload: {
+    email: string;
+    password: string;
+    role: 'CompanyOwner' | 'Accountant';
+    companyName?: string;
+    taxRate?: number;
+    currency?: string;
+    notificationEmail?: string;
+    companyId?: string;
+  }) {
+    return this.http
+      .post<{ access_token: string }>(`${this.apiBase}/auth/signup`, payload)
+      .pipe(
+        tap((response) => localStorage.setItem(this.tokenKey, response.access_token)),
+      );
+  }
 }
