@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   template: `
     <div class="card login-card">
       <h2>Login</h2>
@@ -22,6 +23,7 @@ import { AuthService } from '../services/auth.service';
         <button class="button" type="submit">Sign In</button>
       </form>
       <p class="hint">Default owner: owner&#64;demo.com / Password123!</p>
+      <p class="hint">New here? <a routerLink="/signup">Create an account</a></p>
     </div>
   `,
   styles: [
