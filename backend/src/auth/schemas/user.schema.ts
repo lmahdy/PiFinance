@@ -15,6 +15,12 @@ export class User {
 
   @Prop({ required: true, enum: UserRole })
   role: UserRole;
+
+  @Prop()
+  displayName?: string;
+
+  @Prop()
+  avatar?: string; // data URL or external URL
 }
 
 export type UserDocument = User & Document;

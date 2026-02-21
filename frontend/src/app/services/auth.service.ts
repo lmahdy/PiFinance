@@ -9,12 +9,16 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  setToken(token: string) {
+    localStorage.setItem(this.tokenKey, token);
+  }
+
   login(email: string, password: string) {
     return this.http
       .post<{ access_token: string }>(`${this.apiBase}/auth/login`, { email, password })
       .pipe(
         tap((response) => {
-          localStorage.setItem(this.tokenKey, response.access_token);
+          this.setToken(response.access_token);
         }),
       );
   }
@@ -40,7 +44,7 @@ export class AuthService {
     return this.http
       .post<{ access_token: string }>(`${this.apiBase}/auth/signup`, payload)
       .pipe(
-        tap((response) => localStorage.setItem(this.tokenKey, response.access_token)),
+        tap((response) => this.setToken(response.access_token)),
       );
   }
 }
