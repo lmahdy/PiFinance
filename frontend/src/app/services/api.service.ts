@@ -54,4 +54,20 @@ export class ApiService {
   triggerAgent() {
     return this.http.post(`${this.apiBase}/ai-agent/trigger`, {});
   }
+
+  getProfile() {
+    return this.http.get<any>(`${this.apiBase}/auth/me?ts=${Date.now()}`);
+  }
+
+  updateProfile(payload: { displayName?: string; avatar?: string; email?: string }) {
+    return this.http.patch<any>(`${this.apiBase}/auth/me`, payload);
+  }
+
+  getCompanyConfig() {
+    return this.http.get<any>(`${this.apiBase}/company/config?ts=${Date.now()}`);
+  }
+
+  saveCompanyConfig(payload: { companyName: string; taxRate: number; currency: string; email: string }) {
+    return this.http.post<any>(`${this.apiBase}/company/config`, payload);
+  }
 }

@@ -8,6 +8,7 @@ import { SignupDto } from './dto/signup.dto';
 import { UserRole } from './roles.enum';
 import { CompanyConfig, CompanyConfigDocument } from '../company/schemas/company-config.schema';
 import { Types } from 'mongoose';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 export interface JwtPayload {
   sub: string;
@@ -107,6 +108,66 @@ export class AuthService {
         role: user.role,
         companyId: user.companyId,
       },
+    };
+  }
+
+  async getMe(userId: string) {
+    const user = await this.userModel.findById(userId).lean();
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+    const company = await this.companyModel.findOne({ companyId: user.companyId }).lean();
+    return {
+      user: {
+        id: user._id.toString(),
+        email: user.email,
+        role: user.role,
+        companyId: user.companyId,
+        displayName: user.displayName || '',
+        avatar: user.avatar || '',
+      },
+      companyConfig: company || null,
+    };
+  }
+
+  async updateProfile(userId: string, dto: UpdateProfileDto) {
+    const user = await this.userModel.findById(userId);
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+    if (dto.displayName !== undefined) {
+      user.displayName = dto.displayName;
+    }
+    if (dto.avatar !== undefined) {
+      user.avatar = dto.avatar;
+    }
+    if (dto.email !== undefined && dto.email.toLowerCase() !== user.email) {
+      const nextEmail = dto.email.toLowerCase();
+      const exists = await this.userModel.exists({ email: nextEmail, _id: { $ne: userId } });
+      if (exists) {
+        throw new BadRequestException('Email already in use');
+      }
+      user.email = nextEmail;
+    }
+    await user.save();
+
+    const payload: JwtPayload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      companyId: user.companyId,
+    };
+
+    const access_token = await this.jwtService.signAsync(payload);
+
+    return {
+      access_token,
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      companyId: user.companyId,
+      displayName: user.displayName || '',
+      avatar: user.avatar || '',
     };
   }
 }
